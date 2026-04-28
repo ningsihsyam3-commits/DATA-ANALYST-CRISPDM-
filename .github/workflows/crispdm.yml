@@ -1,0 +1,129 @@
+name: CRISP-DM Workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 7 * * MON" # runs every Monday at 07:00 UTC
+
+jobs:
+
+  business_understanding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Update README - Business Understanding Progress
+        run: |
+          echo "## ✅ Business Understanding Completed: $(date)" >> README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add README.md
+          git commit -m "Update Business Understanding phase"
+          git push
+      - name: Mark docs
+        run: |
+          echo "Business phase done at $(date)" >> docs/business_understanding.md
+
+  data_understanding:
+    needs: business_understanding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Update README - Data Understanding Progress
+        run: |
+          echo "## ✅ Data Understanding Completed: $(date)" >> README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add README.md
+          git commit -m "Update Data Understanding phase"
+          git push
+      - name: Mark docs
+        run: |
+          echo "Data Understanding phase done at $(date)" >> docs/data_understanding.md
+
+  data_preparation:
+    needs: data_understanding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run Data Preparation Script
+        run: |
+          if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
+      - name: Update README - Data Preparation Progress
+        run: |
+          echo "## ✅ Data Preparation Completed: $(date)" >> README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add README.md
+          git commit -m "Update Data Preparation phase"
+          git push
+      - name: Mark docs
+        run: |
+          echo "Data Preparation phase done at $(date)" >> docs/data_preparation.md
+
+  modeling:
+    needs: data_preparation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run Modeling Script
+        run: |
+          if [ -f src/modeling.py ]; then python3 src/modeling.py; fi
+      - name: Update README - Modeling Progress
+        run: |
+          echo "## ✅ Modeling Completed: $(date)" >> README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add README.md
+          git commit -m "Update Modeling phase"
+          git push
+      - name: Mark docs
+        run: |
+          echo "Modeling phase done at $(date)" >> docs/modeling.md
+
+  evaluation:
+    needs: modeling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run Evaluation Script
+        run: |
+          if [ -f src/evaluation.py ]; then python3 src/evaluation.py; fi
+      - name: Update README - Evaluation Progress
+        run: |
+          echo "## ✅ Evaluation Completed: $(date)" >> README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add README.md
+          git commit -m "Update Evaluation phase"
+          git push
+      - name: Mark docs
+        run: |
+          echo "Evaluation phase done at $(date)" >> docs/evaluation.md
+
+  deployment:
+    needs: evaluation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Update README - Deployment Progress
+        run: |
+          echo "## ✅ Deployment Completed: $(date)" >> README.md
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add README.md
+          git commit -m "Update Deployment phase"
+          git push
+      - name: Mark docs
+        run: |
+          echo "Deployment phase done at $(date)" >> docs/deployment.md
+      - name: Notify team (placeholder)
+        run: |
+          echo "Deployment completed. Notify stakeholder!"
