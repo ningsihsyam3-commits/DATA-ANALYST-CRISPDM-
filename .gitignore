@@ -223,3 +223,7 @@ data/processed/*
 data/external/*
 *.db
 *.sqlite3
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
