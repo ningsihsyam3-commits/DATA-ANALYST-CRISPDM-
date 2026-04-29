@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Healthcare Project Data Security ---
+data/raw/*
+data/processed/*
+data/external/*
+*.db
+*.sqlite3
