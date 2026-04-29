@@ -1,7 +1,7 @@
 # Business Understanding
 
 ## Tujuan Project
-- Memahami kebutuhan bisnis ADF Medical Services dalam hal data pasien dan operasional.
+- Memahami kebutuhan bisnis XYZ Medical Services dalam hal data pasien dan operasional.
 
 ## Permasalahan & KPI
 - Identifikasi masalah bisnis yang perlu dipecahkan.
