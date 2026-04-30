@@ -1,0 +1,3 @@
+echo "Placeholder for final report" > temp.txt
+pandoc temp.txt -o reports/final_report.pdf
+rm temp.txt
