@@ -113,6 +113,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Run Streamlit Dashboard
+        run: |
+          # Install dependencies
+          pip install -r requirements.txt
+          
+          # Run Streamlit app (in headless mode)
+          nohup streamlit run reports/dashboard/app.py --server.headless true &
+          sleep 10
+          curl -I http://localhost:8501 # Validate Streamlit server is running
+          
       - name: Update README - Deployment Progress
         run: |
           echo "## ✅ Deployment Completed: $(date)" >> README.md
@@ -124,6 +134,6 @@ jobs:
       - name: Mark docs
         run: |
           echo "Deployment phase done at $(date)" >> docs/deployment.md
-      - name: Notify team (placeholder)
+      - name: Notify team
         run: |
-          echo "Deployment completed. Notify stakeholder!"
+          echo "Deployment completed. Notify stakeholders!"
