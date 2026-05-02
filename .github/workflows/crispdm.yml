@@ -1,5 +1,8 @@
 name: CRISP-DM Workflow
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
   push:
@@ -14,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Update README - Business Understanding Progress
         run: |
           echo "## ✅ Business Understanding Completed: $(date)" >> README.md
@@ -32,6 +37,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Update README - Data Understanding Progress
         run: |
           echo "## ✅ Data Understanding Completed: $(date)" >> README.md
@@ -50,6 +57,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Run Data Preparation Script
         run: |
           if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
@@ -71,6 +80,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Run Modeling Script
         run: |
           if [ -f src/modeling.py ]; then python3 src/modeling.py; fi
@@ -92,6 +103,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Run Evaluation Script
         run: |
           if [ -f src/evaluation.py ]; then python3 src/evaluation.py; fi
@@ -113,6 +126,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Run Streamlit Dashboard
         run: |
           # Install dependencies
