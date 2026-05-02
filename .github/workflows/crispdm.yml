@@ -28,6 +28,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Business Understanding phase"
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }}
           git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
@@ -50,6 +52,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Data Understanding phase"
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }}
           git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
@@ -75,6 +79,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Data Preparation phase"
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }}
           git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
@@ -100,6 +106,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Modeling phase"
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }}
           git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
@@ -125,6 +133,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Evaluation phase"
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }}
           git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
@@ -157,6 +167,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Deployment phase"
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }}
           git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
