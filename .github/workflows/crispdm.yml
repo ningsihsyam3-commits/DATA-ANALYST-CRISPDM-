@@ -18,15 +18,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
       - name: Update README - Business Understanding Progress
         run: |
           echo "## ✅ Business Understanding Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Business Understanding phase"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
           echo "Business phase done at $(date)" >> docs/business_understanding.md
@@ -38,15 +40,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
       - name: Update README - Data Understanding Progress
         run: |
           echo "## ✅ Data Understanding Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Data Understanding phase"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
           echo "Data Understanding phase done at $(date)" >> docs/data_understanding.md
@@ -58,6 +62,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
       - name: Run Data Preparation Script
         run: |
@@ -67,9 +72,10 @@ jobs:
           echo "## ✅ Data Preparation Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Data Preparation phase"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
           echo "Data Preparation phase done at $(date)" >> docs/data_preparation.md
@@ -81,6 +87,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
       - name: Run Modeling Script
         run: |
@@ -90,9 +97,10 @@ jobs:
           echo "## ✅ Modeling Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Modeling phase"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
           echo "Modeling phase done at $(date)" >> docs/modeling.md
@@ -104,6 +112,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
       - name: Run Evaluation Script
         run: |
@@ -113,9 +122,10 @@ jobs:
           echo "## ✅ Evaluation Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Evaluation phase"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
           echo "Evaluation phase done at $(date)" >> docs/evaluation.md
@@ -127,6 +137,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
       - name: Run Streamlit Dashboard
         run: |
@@ -143,9 +154,10 @@ jobs:
           echo "## ✅ Deployment Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Deployment phase"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
       - name: Mark docs
         run: |
           echo "Deployment phase done at $(date)" >> docs/deployment.md
