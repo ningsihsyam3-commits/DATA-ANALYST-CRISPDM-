@@ -27,11 +27,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin ${{ github.ref_name }}
+          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
           git add README.md
           git commit -m "Update Business Understanding phase" || echo "Nothing to commit"
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }} --autostash || true
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
       - name: Mark docs
         run: |
           echo "Business phase done at $(date)" >> docs/business_understanding.md
@@ -52,11 +53,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin ${{ github.ref_name }}
+          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
           git add README.md
           git commit -m "Update Data Understanding phase" || echo "Nothing to commit"
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }} --autostash || true
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
       - name: Mark docs
         run: |
           echo "Data Understanding phase done at $(date)" >> docs/data_understanding.md
@@ -79,11 +81,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin ${{ github.ref_name }}
+          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
           git add README.md
           git commit -m "Update Data Preparation phase" || echo "Nothing to commit"
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }} --autostash || true
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
       - name: Mark docs
         run: |
           echo "Data Preparation phase done at $(date)" >> docs/data_preparation.md
@@ -107,11 +110,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin ${{ github.ref_name }}
+          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
           git add README.md
           git commit -m "Update Modeling phase" || echo "Nothing to commit"
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }} --autostash || true
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
       - name: Mark docs
         run: |
           echo "Modeling phase done at $(date)" >> docs/modeling.md
@@ -135,11 +139,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin ${{ github.ref_name }}
+          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
           git add README.md
           git commit -m "Update Evaluation phase" || echo "Nothing to commit"
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }} --autostash || true
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
       - name: Mark docs
         run: |
           echo "Evaluation phase done at $(date)" >> docs/evaluation.md
@@ -170,11 +175,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin ${{ github.ref_name }}
+          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
           git add README.md
           git commit -m "Update Deployment phase" || echo "Nothing to commit"
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }} --autostash || true
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
       - name: Mark docs
         run: |
           echo "Deployment phase done at $(date)" >> docs/deployment.md
