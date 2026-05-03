@@ -21,14 +21,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Update README - Business Understanding Progress
         run: |
-          echo "## ✅ Business Understanding Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin ${{ github.ref_name }}
-          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+          echo "## ✅ Business Understanding Completed: $(date)" >> README.md
           git add README.md
           git commit -m "Update Business Understanding phase" || echo "Nothing to commit"
           git pull --rebase origin ${{ github.ref_name }}
@@ -47,14 +45,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Update README - Data Understanding Progress
         run: |
-          echo "## ✅ Data Understanding Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin ${{ github.ref_name }}
-          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+          echo "## ✅ Data Understanding Completed: $(date)" >> README.md
           git add README.md
           git commit -m "Update Data Understanding phase" || echo "Nothing to commit"
           git pull --rebase origin ${{ github.ref_name }}
@@ -73,17 +69,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Data Preparation Script
         run: |
           if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
       - name: Update README - Data Preparation Progress
         run: |
-          echo "## ✅ Data Preparation Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin ${{ github.ref_name }}
-          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+          echo "## ✅ Data Preparation Completed: $(date)" >> README.md
           git add README.md
           git commit -m "Update Data Preparation phase" || echo "Nothing to commit"
           git pull --rebase origin ${{ github.ref_name }}
@@ -102,17 +96,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Modeling Script
         run: |
           if [ -f src/modeling.py ]; then python3 src/modeling.py; fi
       - name: Update README - Modeling Progress
         run: |
-          echo "## ✅ Modeling Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin ${{ github.ref_name }}
-          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+          echo "## ✅ Modeling Completed: $(date)" >> README.md
           git add README.md
           git commit -m "Update Modeling phase" || echo "Nothing to commit"
           git pull --rebase origin ${{ github.ref_name }}
@@ -131,17 +123,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Evaluation Script
         run: |
           if [ -f src/evaluation.py ]; then python3 src/evaluation.py; fi
       - name: Update README - Evaluation Progress
         run: |
-          echo "## ✅ Evaluation Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin ${{ github.ref_name }}
-          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+          echo "## ✅ Evaluation Completed: $(date)" >> README.md
           git add README.md
           git commit -m "Update Evaluation phase" || echo "Nothing to commit"
           git pull --rebase origin ${{ github.ref_name }}
@@ -160,6 +150,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Streamlit Dashboard
         run: |
           # Install dependencies
@@ -172,12 +163,9 @@ jobs:
           
       - name: Update README - Deployment Progress
         run: |
-          echo "## ✅ Deployment Completed: $(date)" >> README.md
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin ${{ github.ref_name }}
-          git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+          echo "## ✅ Deployment Completed: $(date)" >> README.md
           git add README.md
           git commit -m "Update Deployment phase" || echo "Nothing to commit"
           git pull --rebase origin ${{ github.ref_name }}
