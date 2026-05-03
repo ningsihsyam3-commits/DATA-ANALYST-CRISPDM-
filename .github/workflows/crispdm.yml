@@ -21,6 +21,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Update README - Business Understanding Progress
         run: |
           git config --global user.email "actions@github.com"
@@ -44,6 +45,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Update README - Data Understanding Progress
         run: |
           git config --global user.email "actions@github.com"
@@ -67,6 +69,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Data Preparation Script
         run: |
           if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
@@ -93,6 +96,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Modeling Script
         run: |
           if [ -f src/modeling.py ]; then python3 src/modeling.py; fi
@@ -119,6 +123,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Evaluation Script
         run: |
           if [ -f src/evaluation.py ]; then python3 src/evaluation.py; fi
@@ -145,6 +150,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - name: Run Streamlit Dashboard
         run: |
           # Install dependencies
