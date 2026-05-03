@@ -73,6 +73,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           fetch-depth: 0
+      - name: Run Data Preparation Script
         run: |
           if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
       - name: Update README - Data Preparation Progress
