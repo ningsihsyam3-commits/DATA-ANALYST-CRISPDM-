@@ -20,6 +20,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          fetch-depth: 0
       - name: Update README - Business Understanding Progress
         run: |
           echo "## ✅ Business Understanding Completed: $(date)" >> README.md
@@ -28,7 +29,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Business Understanding phase" || echo "Nothing to commit"
-          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} --autostash || true
           git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
       - name: Mark docs
         run: |
@@ -43,6 +45,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          fetch-depth: 0
       - name: Update README - Data Understanding Progress
         run: |
           echo "## ✅ Data Understanding Completed: $(date)" >> README.md
@@ -51,7 +54,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Data Understanding phase" || echo "Nothing to commit"
-          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} --autostash || true
           git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
       - name: Mark docs
         run: |
@@ -66,7 +70,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
-      - name: Run Data Preparation Script
+          fetch-depth: 0
         run: |
           if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
       - name: Update README - Data Preparation Progress
@@ -77,7 +81,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Data Preparation phase" || echo "Nothing to commit"
-          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} --autostash || true
           git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
       - name: Mark docs
         run: |
@@ -92,6 +97,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          fetch-depth: 0
       - name: Run Modeling Script
         run: |
           if [ -f src/modeling.py ]; then python3 src/modeling.py; fi
@@ -103,7 +109,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Modeling phase" || echo "Nothing to commit"
-          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} --autostash || true
           git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
       - name: Mark docs
         run: |
@@ -118,6 +125,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          fetch-depth: 0
       - name: Run Evaluation Script
         run: |
           if [ -f src/evaluation.py ]; then python3 src/evaluation.py; fi
@@ -129,7 +137,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Evaluation phase" || echo "Nothing to commit"
-          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} --autostash || true
           git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
       - name: Mark docs
         run: |
@@ -144,6 +153,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          fetch-depth: 0
       - name: Run Streamlit Dashboard
         run: |
           # Install dependencies
@@ -162,7 +172,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add README.md
           git commit -m "Update Deployment phase" || echo "Nothing to commit"
-          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} --autostash || true
           git push origin HEAD:${{ github.ref_name }} --force-with-lease || echo "Push skipped - try again next workflow run"
       - name: Mark docs
         run: |
