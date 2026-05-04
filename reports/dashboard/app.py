@@ -44,6 +44,22 @@ class DashboardConfig:
     EVALUATION_REPORT = RESULTS_DIR / "evaluation" / "evaluation_report.json"
     MODEL_METRICS = RESULTS_DIR / "evaluation" / "model_metrics_isolation_forest.json"
 
+    def required_files(self):
+        return {
+            "Processed Data": self.PROCESSED_DATA_FILE,
+            "Evaluation Report": self.EVALUATION_REPORT,
+            "Model Metrics": self.MODEL_METRICS,
+        }
+
+    def missing_required_files(self):
+        return {name: path for name, path in self.required_files().items() if not path.exists()}
+
+    def format_missing_files(self):
+        missing = self.missing_required_files()
+        if not missing:
+            return None
+        return "\n".join([f"- {name}: {path.relative_to(self.PROJECT_ROOT)}" for name, path in missing.items()])
+
 # ====================== UTILITY FUNCTIONS ======================
 def load_processed_data():
     """Load processed data dari file."""
@@ -141,18 +157,26 @@ def main():
     st.sidebar.header('🚀 Dashboard Navigation')
 
     # Load data status
-    data_loaded = load_processed_data() is not None
-    eval_loaded = load_evaluation_results() is not None
+    config = DashboardConfig()
+    missing_files = config.missing_required_files()
+    data_loaded = config.PROCESSED_DATA_FILE.exists()
+    eval_loaded = config.EVALUATION_REPORT.exists() or config.MODEL_METRICS.exists()
 
     if data_loaded:
         st.sidebar.success("✅ Processed data loaded")
     else:
-        st.sidebar.warning("⚠️ No processed data found")
+        st.sidebar.warning(f"⚠️ No processed data found. Expected: {config.PROCESSED_DATA_FILE.relative_to(config.PROJECT_ROOT)}")
 
     if eval_loaded:
         st.sidebar.success("✅ Evaluation results loaded")
     else:
         st.sidebar.info("ℹ️ No evaluation results found")
+
+    if missing_files:
+        st.sidebar.markdown("---")
+        st.sidebar.warning("Some required files are missing. See below for expected paths.")
+        for name, path in missing_files.items():
+            st.sidebar.write(f"- **{name}**: `{path.relative_to(config.PROJECT_ROOT)}`")
 
     # Navigation options
     options = st.sidebar.radio(
@@ -258,7 +282,7 @@ def show_data_overview():
     df = load_processed_data()
 
     if df is None:
-        st.error("No processed data found. Please run the data processing pipeline first.")
+        st.error(f"No processed data found. Expected file at: {DashboardConfig().PROCESSED_DATA_FILE.relative_to(DashboardConfig().PROJECT_ROOT)}")
         return
 
     # Data upload option
@@ -287,7 +311,7 @@ def show_data_overview():
 
     with col3:
         memory_usage = df.memory_usage(deep=True).sum() / 1024**2
-        st.metric("Memory Usage", ".2f")
+        st.metric("Memory Usage", f"{memory_usage:.2f} MB")
 
     # Data preview
     st.markdown("### 👀 Data Preview")
@@ -408,6 +432,9 @@ def show_anomaly_detection():
 
     with col2:
         numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+        if not numeric_cols:
+            st.warning("Tidak ada kolom numerik yang tersedia untuk deteksi anomali.")
+            return
         selected_col = st.selectbox("Target Column", numeric_cols)
 
     with col3:
@@ -463,8 +490,8 @@ def show_anomaly_detection():
                     st.metric("Anomalies Found", f"{len(anomalies):,}")
 
                 with col3:
-                    percentage = metrics['anomalies_percentage']
-                    st.metric("Anomaly %", ".2f")
+                    percentage = metrics.get('anomalies_percentage', metrics.get('percentage', 0.0))
+                    st.metric("Anomaly %", f"{percentage:.2f}%")
 
                 with col4:
                     normal_count = len(data) - len(anomalies)
@@ -517,7 +544,11 @@ def show_model_evaluation():
     model_metrics = load_model_metrics()
 
     if eval_results is None and model_metrics is None:
+        config = DashboardConfig()
         st.warning("No evaluation results found. Please run model evaluation first.")
+        st.info("Expected evaluation files:")
+        st.write(f"- {config.EVALUATION_REPORT.relative_to(config.PROJECT_ROOT)}")
+        st.write(f"- {config.MODEL_METRICS.relative_to(config.PROJECT_ROOT)}")
         return
 
     # Display evaluation results
@@ -531,46 +562,46 @@ def show_model_evaluation():
             st.markdown("#### 🤖 Classification Metrics")
             class_metrics = results['classification']
 
+            accuracy = class_metrics.get('accuracy', class_metrics.get('acc', 0.0))
+            precision = class_metrics.get('precision', 0.0)
+            recall = class_metrics.get('recall', 0.0)
+            f1_score = class_metrics.get('f1_score', class_metrics.get('f1', 0.0))
+
             col1, col2, col3, col4 = st.columns(4)
 
             with col1:
-                st.metric("Accuracy", ".4f")
+                st.metric("Accuracy", f"{accuracy:.4f}")
 
             with col2:
-                st.metric("Precision", ".4f")
+                st.metric("Precision", f"{precision:.4f}")
 
             with col3:
-                st.metric("Recall", ".4f")
+                st.metric("Recall", f"{recall:.4f}")
 
             with col4:
-                st.metric("F1-Score", ".4f")
-
-            # Confusion matrix
-            if 'confusion_matrix' in class_metrics:
-                st.markdown("#### 📈 Confusion Matrix")
-                cm = np.array(class_metrics['confusion_matrix'])
-                fig = px.imshow(cm, text_auto=True, title="Confusion Matrix",
-                              color_continuous_scale='Blues')
-                st.plotly_chart(fig, use_container_width=True)
-
-        # Anomaly metrics
+                st.metric("F1-Score", f"{f1_score:.4f}")
         if 'anomalies' in results:
             st.markdown("#### 🔍 Anomaly Detection Metrics")
             anomaly_metrics = results['anomalies']
 
+            total_data = anomaly_metrics.get('total_data', 0)
+            anomalies_found = anomaly_metrics.get('anomalies_found', len(anomaly_metrics.get('anomalies', [])))
+            anomaly_percentage = anomaly_metrics.get('percentage', anomaly_metrics.get('anomalies_percentage', 0.0))
+            normal_data = anomaly_metrics.get('normal_data', total_data - anomalies_found)
+
             col1, col2, col3, col4 = st.columns(4)
 
             with col1:
-                st.metric("Total Data", f"{anomaly_metrics['total_data']:,}")
+                st.metric("Total Data", f"{total_data:,}")
 
             with col2:
-                st.metric("Anomalies Found", f"{anomaly_metrics['anomalies_found']:,}")
+                st.metric("Anomalies Found", f"{anomalies_found:,}")
 
             with col3:
-                st.metric("Anomaly %", ".2f")
+                st.metric("Anomaly %", f"{anomaly_percentage:.2f}%")
 
             with col4:
-                st.metric("Normal Data", f"{anomaly_metrics['normal_data']:,}")
+                st.metric("Normal Data", f"{normal_data:,}")
 
     # Display model-specific metrics
     if model_metrics:
@@ -597,6 +628,10 @@ def show_model_configuration():
     st.markdown("### 📊 Method Comparison")
 
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    if not numeric_cols:
+        st.warning("Tidak ada kolom numerik yang tersedia untuk konfigurasi model.")
+        return
+
     selected_col = st.selectbox("Select Column for Comparison", numeric_cols)
 
     methods_to_compare = st.multiselect(
