@@ -70,9 +70,17 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           ref: ${{ github.ref_name }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
       - name: Run Data Preparation Script
         run: |
-          if [ -f src/data_preparation.py ]; then python3 src/data_preparation.py; fi
+          if [ -f src/data_preparation.py ]; then python src/data_preparation.py; fi
       - name: Update README - Data Preparation Progress
         run: |
           git config --global user.email "actions@github.com"
@@ -97,9 +105,17 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           ref: ${{ github.ref_name }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
       - name: Run Modeling Script
         run: |
-          if [ -f src/modeling.py ]; then python3 src/modeling.py; fi
+          if [ -f src/modeling.py ]; then python src/modeling.py; fi
       - name: Update README - Modeling Progress
         run: |
           git config --global user.email "actions@github.com"
@@ -124,9 +140,17 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           ref: ${{ github.ref_name }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
       - name: Run Evaluation Script
         run: |
-          if [ -f src/evaluation.py ]; then python3 src/evaluation.py; fi
+          if [ -f src/evaluation.py ]; then python src/evaluation.py; fi
       - name: Update README - Evaluation Progress
         run: |
           git config --global user.email "actions@github.com"
@@ -151,11 +175,16 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           ref: ${{ github.ref_name }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
       - name: Run Streamlit Dashboard
         run: |
-          # Install dependencies
-          pip install -r requirements.txt
-          
           # Run Streamlit app (in headless mode)
           nohup streamlit run reports/dashboard/app.py --server.headless true &
           sleep 10
