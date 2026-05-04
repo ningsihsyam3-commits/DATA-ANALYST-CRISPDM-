@@ -241,6 +241,19 @@ print(f"Accuracy: {metrics['accuracy']:.4f}")
 print(f"F1-Score: {metrics['f1_score']:.4f}")
 ```
 
+### ✅ Data File Checker Script
+Untuk memastikan file yang dibutuhkan tersedia, gunakan skrip berikut:
+```bash
+python scripts/check_data_files.py
+```
+Skrip ini akan memeriksa keberadaan:
+- `data/raw/hospital_data_raw.csv`
+- `data/processed/hospital_data_cleaned.csv`
+- `results/evaluation/evaluation_report.json`
+- `results/evaluation/model_metrics_isolation_forest.json`
+
+Jika file raw belum ada, skrip akan merekomendasikan menambahkan dataset raw terlebih dahulu lalu jalankan pipeline pembersihan data.
+
 ## 🤝 Contributing
 
 1. Fork the repository
