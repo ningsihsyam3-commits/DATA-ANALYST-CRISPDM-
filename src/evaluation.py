@@ -11,7 +11,7 @@ import seaborn as sns
 from sklearn.metrics import (
     confusion_matrix, classification_report, roc_auc_score, roc_curve,
     precision_recall_curve, f1_score, accuracy_score, precision_score,
-    recall_score, specificity_score, matthews_corrcoef, cohen_kappa_score
+    recall_score, matthews_corrcoef, cohen_kappa_score
 )
 from sklearn.model_selection import cross_val_score
 import warnings
