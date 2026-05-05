@@ -6,4 +6,8 @@ seaborn
 scipy
 scikit-learn
 ucimlrepo
+<<<<<<< HEAD
 plotly
+=======
+plotly
+>>>>>>> b94580f6575c41ed06915ca4b6fb1aa126cd09f2
